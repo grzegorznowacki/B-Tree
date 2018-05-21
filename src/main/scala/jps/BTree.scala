@@ -25,6 +25,49 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
     searchWithNode(rootNode)
   }//search
 
+
+
+  def insert(insertKey: K, insertValue: V): BTree[K, V] = {
+
+    def splitNode(node: Node[K, V]): (NodeElement[K, V], Node[K, V], Node[K, V]) = {
+
+      val returnNodeElement = node.nodeElements(order - 1)
+      val returnLeftNode = Node(node.nodeElements.take(order - 1), node.nodeChildren.take(order))     //take - selects first n elements
+      val returnRightNode = Node(node.nodeElements.takeRight(order - 1), node.nodeChildren.takeRight(order))    //takeRight - selects last n elements
+
+      (returnNodeElement, returnLeftNode, returnRightNode)
+    }
+
+    def insertWithNode(node: Node[K, V]): Either[(NodeElement[K, V], Node[K,V], Node[K, V]), Node[K, V]] = {
+
+      val foundElementIndex = node.nodeElements.indexWhere(_.key == insertKey)
+
+      /* Key already exists */
+      if(foundElementIndex > -1) {
+        val newNodeElement = NodeElement(insertKey, insertValue)
+        val newNodeElements = node.nodeElements.updated(foundElementIndex, newNodeElement)    // updated - A copy of this vector with one single replaced element.
+        Right(node.copy(nodeElements = newNodeElements))    //copy returns new Node object with changed nodeElements field
+      } else {
+
+        val nodeCopy = if(node.isLeaf) {
+          val newNodeElement = NodeElement(insertKey, insertValue)
+          val newNodeElements = (node.nodeElements :+ newNodeElement).sortBy(_.key)
+          node.copy(nodeElements = newNodeElements)
+        } else {
+          val index = node.nodeElements.lastIndexWhere(insertKey > _.key) + 1
+          val childNode = node.nodeChildren(index)
+
+          insertWithNode(childNode) match {
+            case Left
+          }
+        }
+
+      }
+
+    }
+
+  }
+
 }
 
 object BTree {
