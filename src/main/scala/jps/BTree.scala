@@ -48,7 +48,6 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
         val newNodeElements = node.nodeElements.updated(foundElementIndex, newNodeElement)    // updated - A copy of this vector with one single replaced element.
         Right(node.copy(nodeElements = newNodeElements))    //copy returns new Node object with changed nodeElements field
       } else {
-
         val nodeCopy = if(node.isLeaf) {
           val newNodeElement = NodeElement(insertKey, insertValue)
           val newNodeElements = (node.nodeElements :+ newNodeElement).sortBy(_.key)
@@ -58,14 +57,29 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
           val childNode = node.nodeChildren(index)
 
           insertWithNode(childNode) match {
-            case Left
+            case Left((restNodeElements, splitNodeLeft, splitNodeRight)) =>
+              val (left, right) = node.nodeChildren.splitAt(index)    //Splits a vector into two at given position
+              node.copy(
+                nodeElements = (node.nodeElements :+ restNodeElements).sortBy(_.key),
+                nodeChildren = (left :+ splitNodeLeft :+ splitNodeRight) ++ right.tail
+              )
+
+            case Right(modifiedChild) =>
+              node.copy(nodeChildren = node.nodeChildren.updated(index, modifiedChild))
           }
         }
-
+        if(nodeCopy.nodeElements.length == 2 * order - 1)
+          Left(splitNode(nodeCopy))
+        else
+          Right(nodeCopy)
       }
 
     }
 
+    this.copy(rootNode = insertWithNode(rootNode) match {
+      case Right(node) => node
+      case Left((restNodeElements, left, right)) => Node(Vector(restNodeElements), Vector(left, right))
+    })
   }
 
 }
