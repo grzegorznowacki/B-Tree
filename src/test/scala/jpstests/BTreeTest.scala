@@ -6,11 +6,96 @@ import jps._
 
 class BTreeTest extends FunSuite with BeforeAndAfter {
 
-  test("get empty tree") {
-    val bTree = BTree.getEmptyBTree[Int, Int](1)    //order?
+  test("GIVEN empty btree with degree 3 WHEN do nothing THEN it should be empty") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)    //order = 3
 
     assert(bTree.rootNode.nodeElements.isEmpty)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN do nothing THEN root node should not have children") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
     assert(bTree.rootNode.nodeChildren.isEmpty)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert one element THEN it should no longer be empty") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(2, 5)   // Do not forget that bTree is immutable. Insert does not insert into it but produces new one.
+
+    assert(newBTree.rootNode.nodeElements.isEmpty == false)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert one element THEN root node should be leaf") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(2, 5)
+
+    assert(newBTree.rootNode.isLeaf)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert one element THEN root node should not have children") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(2, 5)
+
+    assert(newBTree.rootNode.nodeChildren.isEmpty)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert 4 different elements THEN root node should not have children") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(2, 5).insert(3, 5).insert(4, 5).insert(5, 5)
+
+    assert(newBTree.rootNode.nodeChildren.isEmpty)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert 5 different elements THEN root node should have 2 children") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(11, 5).insert(3, 5).insert(4, 5).insert(1, 5).insert(5, 5)
+
+    assert(newBTree.rootNode.nodeChildren.length == 2)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert 4 different elements THEN root node should have 4 elements") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(2, 5).insert(3, 5).insert(4, 5).insert(5, 5)
+
+    assert(newBTree.rootNode.nodeElements.length == 4)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert 2 same-key elements THEN root node should have 1 element") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(2, 5).insert(2, 6)
+
+    assert(newBTree.rootNode.nodeElements.length == 1)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert 1 element with key X value Y THEN after search with key X value Y should be returned") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(2, 5)
+
+    assert(newBTree.search(2).get == 5)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert 2 same-key elements THEN element value should be updated") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(2, 5).insert(2, 6)
+
+    assert(newBTree.search(2).get == 6)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert 6 different elements THEN after search by key value should be returned") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(13, 5).insert(3, 6).insert(6, 2).insert(5, 8).insert(2, 8).insert(7, 9)
+
+    assert(newBTree.search(6).get == 2)
   }
 
 }
