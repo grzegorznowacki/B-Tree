@@ -158,6 +158,16 @@ class BTreeTest extends FunSuite with BeforeAndAfter {
 
     assert(newBTree.search(7).isEmpty)
   }
+  test("GIVEN empty btree with degree 3 WHEN insert 3 delete one and found other element") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(1,1).
+      insert(2,1).
+      insert(3,1).
+      delete(3)
+
+    assert(newBTree.search(2).get == 1)
+  }
   test("GIVEN value from btree with degree 3 WHEN insert 8 delete other child (check if delete dont delete other values)") {
     val bTree = BTree.getEmptyBTree[Int, Int](3)
 
