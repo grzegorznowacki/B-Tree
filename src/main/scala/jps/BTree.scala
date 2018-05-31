@@ -102,28 +102,28 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
     }
 
     //from leaf - simply delete
-    def removeFromLeaf(node: Node[K, V], index: Int): Either[(NodeElement[K, V], Node[K, V], Node[K, V]), Node[K, V]] = {
+    def removeFromLeaf(node: Node[K, V], index: Int): Node[K, V] = {
       val newNodeElements = node.nodeElements.filter(k => node.nodeElements.indexOf(k) != index) //new nodeElements without previous index
-      Right(node.copy(nodeElements = newNodeElements))
+      node.copy(nodeElements = newNodeElements)
     }
 
-    def removeFromNonLeaf(node: Node[K, V], index: Int): Either[(NodeElement[K, V], Node[K, V], Node[K, V]), Node[K, V]] = {
+    def removeFromNonLeaf(node: Node[K, V], index: Int): Node[K, V] = {
       //if child precedes index have at least order keys, replace and remove
       if (node.nodeChildren(index).nodeElements.length >= order) {
         val lastElementInPreviousChildren = node.nodeChildren(index).nodeElements.last
         val newCurrentNode = node.nodeElements.updated(index, lastElementInPreviousChildren) //switch last element with current
-        Right(node.copy(
+        node.copy(
           nodeElements = newCurrentNode,
           nodeChildren = removeLastElementFromVec(node.nodeChildren)
-        ))
+        )
       } //child node, before element have less than order keys, so examine next node, and do the same with first element
       else if (node.nodeChildren(index + 1).nodeElements.length >= order) {
         val firstElemenentInNextChildren = node.nodeChildren(index + 1).nodeElements.head
         val newCurrentNode = node.nodeElements.updated(index, firstElemenentInNextChildren) //switch first child element with current
-        Right(node.copy(
+        node.copy(
           nodeElements = newCurrentNode,
           nodeChildren = removeFirstElementFromVec(node.nodeChildren)
-        ))
+        )
       }
       //we should merge nodes, childBefore and nextChild have less than order keys
       else {
@@ -131,15 +131,15 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
         val lastNodeChildrenElements = node.nodeChildren.last.nodeElements
 
         val nodeChildrenWithoutLast = node.nodeChildren.dropRight(1)
-        Right(node.copy(
+        node.copy(
           nodeElements = nodeElementsRemoveNode ++ lastNodeChildrenElements,
           nodeChildren = nodeChildrenWithoutLast
-        ))
+        )
       }
       //deleted element is center in node
     }
 
-    def deleteWithNode(node: Node[K, V]): Either[(NodeElement[K, V], Node[K, V], Node[K, V]), Node[K, V]] = {
+    def deleteWithNode(node: Node[K, V]): Node[K, V] = {
 
       val foundElementIndex = node.nodeElements.indexWhere(_.key == key) //foundElement is of type Option[NodeElement[K, V]] because function find returns Option
       if (foundElementIndex >= 0) {
@@ -153,21 +153,16 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
       else {
         //we go to the end of tree, and not found
         if (node.isLeaf) {
-          Right(rootNode)
+          rootNode // not found
         } else {
           val index = node.nodeElements.lastIndexWhere(key > _.key) + 1
-          deleteWithNode(node.nodeChildren(index)) match {
-            case Right(modifiedChild) => Right(node.copy(nodeChildren = node.nodeChildren.updated(index, modifiedChild)))
+            node.copy(nodeChildren = node.nodeChildren.updated(index, deleteWithNode(node.nodeChildren(index))))
           } // go deeper
         }
-      }
     }
 
     //deleteWithNode
-    this.copy(rootNode = deleteWithNode(rootNode) match {
-      case Right(node) => node
-      case Left((restNodeElements, left, right)) => Node(Vector(restNodeElements), Vector(left, right))
-    })
+    this.copy(rootNode = deleteWithNode(rootNode))
   }
 
   //delete
