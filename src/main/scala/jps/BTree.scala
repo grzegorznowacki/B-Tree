@@ -85,21 +85,19 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
 
   def delete(key: K): BTree[K, V] = {
 
-    def mergeNode(node: Node[K, V]): (NodeElement[K, V], Node[K, V], Node[K, V]) = {
-
-      val returnNodeElement = node.nodeElements(order - 1)
-      val returnLeftNode = Node(node.nodeElements.take(order - 1), node.nodeChildren.take(order)) //take - selects first n elements
-      val returnRightNode = Node(node.nodeElements.takeRight(order - 1), node.nodeChildren.takeRight(order)) //takeRight - selects last n elements
-
-      (returnNodeElement, returnLeftNode, returnRightNode)
-    }
-
     def removeLastElementFromVec(vec: Vector[Node[K, V]]) : Vector[Node[K,V]] = {
       val newNodeElements = vec(vec.length-1).nodeElements.dropRight(1)
       val lastChildrenUpdated = vec(vec.length-1).copy(
         nodeElements = newNodeElements
       )
       vec.updated(vec.length-1, lastChildrenUpdated)
+    }
+    def removeFirstElementFromVec(vec: Vector[Node[K, V]]) : Vector[Node[K,V]] = {
+      val newNodeElements = vec(0).nodeElements.drop(1)
+      val firstChildrenUpdated = vec(0).copy(
+        nodeElements = newNodeElements
+      )
+      vec.updated(0, firstChildrenUpdated)
     }
     //from leaf - simply delete
     def removeFromLeaf(node: Node[K, V], index: Int): Either[(NodeElement[K, V], Node[K, V], Node[K, V]), Node[K, V]] = {
@@ -116,9 +114,25 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
           nodeElements = newCurrentNode,
           nodeChildren = removeLastElementFromVec(node.nodeChildren)
         ))
+      }//child node, before element have less than order keys, so examine next node, and do the same with first element
+      else if(node.nodeChildren(index+1).nodeElements.length >= order){
+        val firstElemenentInNextChildren = node.nodeChildren(index+1).nodeElements.head
+        val newCurrentNode = node.nodeElements.updated(index, firstElemenentInNextChildren) //switch first child element with current
+        Right(node.copy(
+          nodeElements = newCurrentNode,
+          nodeChildren = removeFirstElementFromVec(node.nodeChildren)
+        ))
       }
-      if(node.nodeChildren(index).nodeElements.length >= order){
+        //we should merge nodes, childBefore and nextChild have less than order keys
+      else {
+        val nodeElementsRemoveNode = node.nodeElements.filter(x => node.nodeElements.indexOf(x) != index)
+        val lastNodeChildrenElements = node.nodeChildren.last.nodeElements
 
+        val nodeChildrenWithoutLast = node.nodeChildren.dropRight(1)
+        Right(node.copy(
+          nodeElements = nodeElementsRemoveNode ++ lastNodeChildrenElements,
+          nodeChildren = nodeChildrenWithoutLast
+        ))
       }
       //deleted element is center in node
     }
