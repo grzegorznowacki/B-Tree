@@ -86,21 +86,21 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="_root_">root</a></dd></dl></div>
     </li><li class="current-entities indented1">
-                        <a class="object" href="" title=""></a>
-                        <a class="class" href="BTree.html" title=""></a>
-                        <a href="BTree.html" title="">BTree</a>
+                        <a class="object" href="" title="Companion object defining some static methods."></a>
+                        <a class="class" href="BTree.html" title="This class defines BTree and supplies methods to operate on it."></a>
+                        <a href="BTree.html" title="This class defines BTree and supplies methods to operate on it.">BTree</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
                         <a class="object" href="Main$.html" title=""></a>
                         <a href="Main$.html" title="">Main</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
-                        <a class="class" href="Node.html" title=""></a>
-                        <a href="Node.html" title="">Node</a>
+                        <a class="class" href="Node.html" title="This class defines a node of BTree."></a>
+                        <a href="Node.html" title="This class defines a node of BTree.">Node</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
-                        <a class="class" href="NodeElement.html" title="This class defines an element which is going to be stored in BTree."></a>
-                        <a href="NodeElement.html" title="This class defines an element which is going to be stored in BTree.">NodeElement</a>
+                        <a class="class" href="NodeElement.html" title="This class defines an element which is going to be stored in a node of BTree."></a>
+                        <a href="NodeElement.html" title="This class defines an element which is going to be stored in a node of BTree.">NodeElement</a>
                       </li>
               </ul>
             </div>
@@ -131,7 +131,8 @@
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>Companion object defining some static methods.
+</p></div><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -349,10 +350,10 @@
                 <span class="name">@native</span><span class="args">()</span>
               
         </dd></dl></div>
-    </li><li name="jps.BTree#getEmptyBTree" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
-      <a id="getEmptyBTree[K,V](order:Int)(implicitordering:Ordering[K]):jps.BTree[K,V]"></a><a id="getEmptyBTree[K,V](Int)(Ordering[K]):BTree[K,V]"></a>
+    </li><li name="jps.BTree#getEmptyBTree" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
+      <a id="getEmptyBTree[K,V](degree:Int)(implicitordering:Ordering[K]):jps.BTree[K,V]"></a><a id="getEmptyBTree[K,V](Int)(Ordering[K]):BTree[K,V]"></a>
       <span class="permalink">
-      <a href="../jps/BTree$.html#getEmptyBTree[K,V](order:Int)(implicitordering:Ordering[K]):jps.BTree[K,V]" title="Permalink">
+      <a href="../jps/BTree$.html#getEmptyBTree[K,V](degree:Int)(implicitordering:Ordering[K]):jps.BTree[K,V]" title="Permalink">
         <i class="material-icons"></i>
       </a>
     </span>
@@ -361,10 +362,11 @@
         <span class="kind">def</span>
       </span>
       <span class="symbol">
-        <span class="name">getEmptyBTree</span><span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span><span class="params">(<span name="order">order: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ordering">ordering: <span class="extype" name="scala.Ordering">Ordering</span>[<span class="extype" name="jps.BTree.getEmptyBTree.K">K</span>]</span>)</span><span class="result">: <a href="BTree.html" class="extype" name="jps.BTree">BTree</a>[<span class="extype" name="jps.BTree.getEmptyBTree.K">K</span>, <span class="extype" name="jps.BTree.getEmptyBTree.V">V</span>]</span>
+        <span class="name">getEmptyBTree</span><span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span><span class="params">(<span name="degree">degree: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ordering">ordering: <span class="extype" name="scala.Ordering">Ordering</span>[<span class="extype" name="jps.BTree.getEmptyBTree.K">K</span>]</span>)</span><span class="result">: <a href="BTree.html" class="extype" name="jps.BTree">BTree</a>[<span class="extype" name="jps.BTree.getEmptyBTree.K">K</span>, <span class="extype" name="jps.BTree.getEmptyBTree.V">V</span>]</span>
       </span>
       
-      
+      <p class="shortcomment cmt">Generates empty BTree.</p><div class="fullcomment"><div class="comment cmt"><p>Generates empty BTree.
+</p></div><dl class="paramcmts block"><dt class="tparam">K</dt><dd class="cmt"><p>type of key</p></dd><dt class="tparam">V</dt><dd class="cmt"><p>type of value</p></dd><dt class="param">degree</dt><dd class="cmt"><p>minimum degree of this BTree</p></dd><dt class="param">ordering</dt><dd class="cmt"><p>given ordering for keys</p></dd><dt>returns</dt><dd class="cmt"><p>empty BTree</p></dd></dl></div>
     </li><li name="scala.AnyRef#hashCode" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="hashCode():Int"></a>
       <span class="permalink">

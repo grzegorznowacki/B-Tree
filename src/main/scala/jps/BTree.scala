@@ -21,11 +21,23 @@ package jps
 case class BTree[K, V](rootNode: Node[K, V], degree: Int)(implicit keyOrdering: Ordering[K]) {
 
   /* This implicit method augments T with the comparison operators defined in scala.math.Ordering.Ops */
-
   import keyOrdering.mkOrderingOps
 
+  /**
+    * Search for value by a given key.
+    *
+    * @param key key at which value is going to be searched
+    * @return found value wrapped in Option class, i.e. Some[V] if found or else None
+    */
   def search(key: K): Option[V] = {
 
+    /**
+      * Auxiliary method to search for a value when a node is given.
+      * Searching is done in nodeElements vector of given node, if not found this function is called recursively.
+      *
+      * @param node node inside which searching will be performed
+      * @return found value wrapped in Option class, i.e. Some[V] if found or else None
+      */
     def searchWithNode(node: Node[K, V]): Option[V] = {
 
       val foundElement = node.nodeElements.find(_.key == key) //foundElement is of type Option[NodeElement[K, V]] because function find returns Option
@@ -44,9 +56,23 @@ case class BTree[K, V](rootNode: Node[K, V], degree: Int)(implicit keyOrdering: 
     searchWithNode(rootNode)
   } //search
 
-
+  /**
+    * Insert key-value pair into BTree.
+    * Each value is kept "under" its key.
+    * Keys are unique i.e. if inserting at a key which already exists then the value is being replaced.
+    *
+    * @param insertKey key at which value will be inserted
+    * @param insertValue inserted value
+    * @return a copy of this BTree with inserted element
+    */
   def insert(insertKey: K, insertValue: V): BTree[K, V] = {
 
+    /**
+      * Auxiliary method to split given node into two nodes.
+      *
+      * @param node given node which is supposed to be splited
+      * @return a tuple consisting of NodeElement which will be put in parent node and two new nodes with appropriate elements
+      */
     def splitNode(node: Node[K, V]): (NodeElement[K, V], Node[K, V], Node[K, V]) = {
 
       val returnNodeElement = node.nodeElements(degree - 1)
@@ -56,6 +82,13 @@ case class BTree[K, V](rootNode: Node[K, V], degree: Int)(implicit keyOrdering: 
       (returnNodeElement, returnLeftNode, returnRightNode)
     }
 
+    /**
+      * Auxiliary method used by insert method.
+      * It allows to insert into given node.
+      *
+      * @param node node into which insert will be tried
+      * @return
+      */
     def insertWithNode(node: Node[K, V]): Either[(NodeElement[K, V], Node[K, V], Node[K, V]), Node[K, V]] = {
 
       val foundElementIndex = node.nodeElements.indexWhere(_.key == insertKey)
@@ -100,7 +133,12 @@ case class BTree[K, V](rootNode: Node[K, V], degree: Int)(implicit keyOrdering: 
     })
   }
 
-
+  /**
+    * Delete element by given key.
+    *
+    * @param key key indicating element to be deleted
+    * @return a copy of this BTree with deleted element
+    */
   def delete(key: K): BTree[K, V] = {
 
     def removeLastElementFromVec(vec: Vector[Node[K, V]]): Vector[Node[K, V]] = {
@@ -186,10 +224,22 @@ case class BTree[K, V](rootNode: Node[K, V], degree: Int)(implicit keyOrdering: 
   //delete
 }
 
+/**
+  * Companion object defining some static methods.
+  */
 object BTree {
 
-  def getEmptyBTree[K, V](order: Int)(implicit ordering: Ordering[K]): BTree[K, V] = {
-    BTree(Node[K, V](Vector.empty, Vector.empty), order)
+  /**
+    * Generates empty BTree.
+    *
+    * @param degree minimum degree of this BTree
+    * @param ordering given ordering for keys
+    * @tparam K type of key
+    * @tparam V type of value
+    * @return empty BTree
+    */
+  def getEmptyBTree[K, V](degree: Int)(implicit ordering: Ordering[K]): BTree[K, V] = {
+    BTree(Node[K, V](Vector.empty, Vector.empty), degree)
   } //getEmptyBTree
 
 }

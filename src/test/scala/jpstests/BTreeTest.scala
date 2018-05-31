@@ -1,10 +1,12 @@
 package jpstests
 
 import org.scalatest.FunSuite
-import org.scalatest.BeforeAndAfter
 import jps._
 
-class BTreeTest extends FunSuite with BeforeAndAfter {
+/**
+  * This class supplies tests for BTree.
+  */
+class BTreeTest extends FunSuite {
 
   test("GIVEN empty btree with degree 3 WHEN do nothing THEN it should be empty") {
     val bTree = BTree.getEmptyBTree[Int, Int](3)    //order = 3

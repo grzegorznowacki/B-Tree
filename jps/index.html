@@ -86,21 +86,21 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="_root_">root</a></dd></dl></div>
     </li><li class="current-entities indented1">
-                        <a class="object" href="BTree$.html" title=""></a>
-                        <a class="class" href="BTree.html" title=""></a>
-                        <a href="BTree.html" title="">BTree</a>
+                        <a class="object" href="BTree$.html" title="Companion object defining some static methods."></a>
+                        <a class="class" href="BTree.html" title="This class defines BTree and supplies methods to operate on it."></a>
+                        <a href="BTree.html" title="This class defines BTree and supplies methods to operate on it.">BTree</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
                         <a class="object" href="Main$.html" title=""></a>
                         <a href="Main$.html" title="">Main</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
-                        <a class="class" href="Node.html" title=""></a>
-                        <a href="Node.html" title="">Node</a>
+                        <a class="class" href="Node.html" title="This class defines a node of BTree."></a>
+                        <a href="Node.html" title="This class defines a node of BTree.">Node</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
-                        <a class="class" href="NodeElement.html" title="This class defines an element which is going to be stored in BTree."></a>
-                        <a href="NodeElement.html" title="This class defines an element which is going to be stored in BTree.">NodeElement</a>
+                        <a class="class" href="NodeElement.html" title="This class defines an element which is going to be stored in a node of BTree."></a>
+                        <a href="NodeElement.html" title="This class defines an element which is going to be stored in a node of BTree.">NodeElement</a>
                       </li>
               </ul>
             </div>
@@ -164,7 +164,7 @@
 
         <div id="types" class="types members">
               <h3>Type Members</h3>
-              <ol><li name="jps.BTree" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="jps.BTree" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="BTree[K,V]extendsProductwithSerializable"></a><a id="BTree[K,V]:BTree[K,V]"></a>
       <span class="permalink">
       <a href="../jps/index.html#BTree[K,V]extendsProductwithSerializable" title="Permalink">
@@ -176,11 +176,21 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="BTree.html"><span class="name">BTree</span></a><span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span><span class="params">(<span name="rootNode">rootNode: <a href="Node.html" class="extype" name="jps.Node">Node</a>[<span class="extype" name="jps.BTree.K">K</span>, <span class="extype" name="jps.BTree.V">V</span>]</span>, <span name="order">order: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="keyOrdering">keyOrdering: <span class="extype" name="scala.Ordering">Ordering</span>[<span class="extype" name="jps.BTree.K">K</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a title="This class defines BTree and supplies methods to operate on it." href="BTree.html"><span class="name">BTree</span></a><span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span><span class="params">(<span name="rootNode">rootNode: <a href="Node.html" class="extype" name="jps.Node">Node</a>[<span class="extype" name="jps.BTree.K">K</span>, <span class="extype" name="jps.BTree.V">V</span>]</span>, <span name="degree">degree: <span class="extype" name="scala.Int">Int</span></span>)</span><span class="params">(<span class="implicit">implicit </span><span name="keyOrdering">keyOrdering: <span class="extype" name="scala.Ordering">Ordering</span>[<span class="extype" name="jps.BTree.K">K</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
-      
-    </li><li name="jps.Node" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+      <p class="shortcomment cmt">This class defines BTree and supplies methods to operate on it.</p><div class="fullcomment"><div class="comment cmt"><p>This class defines BTree and supplies methods to operate on it.
+BTree is specified by its root node and its degree.
+All leaves are at same level.
+A B-Tree is defined by the term minimum degree ‘degree’. The value of degree depends upon disk block size.
+Every node except root must contain at least degree - 1 keys. Root may contain minimum 1 key.
+All nodes (including root) may contain at most 2 * degree – 1 keys.
+Number of children of a node is equal to the number of keys in it plus 1.
+All keys of a node are sorted in increasing order. The child between two keys k1 and k2 contains all keys in the range from k1 and k2.
+B-Tree grows and shrinks from the root which is unlike Binary Search Tree. Binary Search Trees grow downward and also shrink from downward.
+Like other balanced Binary Search Trees, time complexity to search, insert and delete is O(Logn).
+</p></div><dl class="paramcmts block"><dt class="tparam">K</dt><dd class="cmt"><p>type of key</p></dd><dt class="tparam">V</dt><dd class="cmt"><p>type of value</p></dd><dt class="param">rootNode</dt><dd class="cmt"><p>root node of this BTree</p></dd><dt class="param">degree</dt><dd class="cmt"><p>minimum degree of this BTree</p></dd><dt class="param">keyOrdering</dt><dd class="cmt"><p>given ordering for keys</p></dd></dl></div>
+    </li><li name="jps.Node" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="Node[K,V]extendsProductwithSerializable"></a><a id="Node[K,V]:Node[K,V]"></a>
       <span class="permalink">
       <a href="../jps/index.html#Node[K,V]extendsProductwithSerializable" title="Permalink">
@@ -192,10 +202,13 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="" href="Node.html"><span class="name">Node</span></a><span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span><span class="params">(<span name="nodeElements">nodeElements: <span class="extype" name="scala.Vector">Vector</span>[<a href="NodeElement.html" class="extype" name="jps.NodeElement">NodeElement</a>[<span class="extype" name="jps.Node.K">K</span>, <span class="extype" name="jps.Node.V">V</span>]]</span>, <span name="nodeChildren">nodeChildren: <span class="extype" name="scala.Vector">Vector</span>[<a href="Node.html" class="extype" name="jps.Node">Node</a>[<span class="extype" name="jps.Node.K">K</span>, <span class="extype" name="jps.Node.V">V</span>]]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ordering">ordering: <span class="extype" name="scala.Ordering">Ordering</span>[<span class="extype" name="jps.Node.K">K</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a title="This class defines a node of BTree." href="Node.html"><span class="name">Node</span></a><span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span><span class="params">(<span name="nodeElements">nodeElements: <span class="extype" name="scala.Vector">Vector</span>[<a href="NodeElement.html" class="extype" name="jps.NodeElement">NodeElement</a>[<span class="extype" name="jps.Node.K">K</span>, <span class="extype" name="jps.Node.V">V</span>]]</span>, <span name="nodeChildren">nodeChildren: <span class="extype" name="scala.Vector">Vector</span>[<a href="Node.html" class="extype" name="jps.Node">Node</a>[<span class="extype" name="jps.Node.K">K</span>, <span class="extype" name="jps.Node.V">V</span>]]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ordering">ordering: <span class="extype" name="scala.Ordering">Ordering</span>[<span class="extype" name="jps.Node.K">K</span>]</span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
-      
+      <p class="shortcomment cmt">This class defines a node of BTree.</p><div class="fullcomment"><div class="comment cmt"><p>This class defines a node of BTree.
+Node stores information in a vector about NodeElements it contains.
+Node stores information in a vector about its children.
+</p></div><dl class="paramcmts block"><dt class="tparam">K</dt><dd class="cmt"><p>type of key</p></dd><dt class="tparam">V</dt><dd class="cmt"><p>type of value</p></dd><dt class="param">nodeElements</dt><dd class="cmt"><p>Vector of NodeElements which are stored in this node</p></dd><dt class="param">nodeChildren</dt><dd class="cmt"><p>Vector of node's children</p></dd><dt class="param">ordering</dt><dd class="cmt"><p>given ordering for keys</p></dd></dl></div>
     </li><li name="jps.NodeElement" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="NodeElement[K,V]extendsProductwithSerializable"></a><a id="NodeElement[K,V]:NodeElement[K,V]"></a>
       <span class="permalink">
@@ -208,10 +221,10 @@
         <span class="kind">case class</span>
       </span>
       <span class="symbol">
-        <a title="This class defines an element which is going to be stored in BTree." href="NodeElement.html"><span class="name">NodeElement</span></a><span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="jps.NodeElement.K">K</span></span>, <span name="value">value: <span class="extype" name="jps.NodeElement.V">V</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a title="This class defines an element which is going to be stored in a node of BTree." href="NodeElement.html"><span class="name">NodeElement</span></a><span class="tparams">[<span name="K">K</span>, <span name="V">V</span>]</span><span class="params">(<span name="key">key: <span class="extype" name="jps.NodeElement.K">K</span></span>, <span name="value">value: <span class="extype" name="jps.NodeElement.V">V</span></span>)</span><span class="result"> extends <span class="extype" name="scala.Product">Product</span> with <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
-      <p class="shortcomment cmt">This class defines an element which is going to be stored in BTree.</p><div class="fullcomment"><div class="comment cmt"><p>This class defines an element which is going to be stored in BTree.
+      <p class="shortcomment cmt">This class defines an element which is going to be stored in a node of BTree.</p><div class="fullcomment"><div class="comment cmt"><p>This class defines an element which is going to be stored in a node of BTree.
 Each Node of BTree consists of NodeElements.
 NodeElement is a key-value pair.
 Each value is kept &quot;under&quot; its key.
@@ -237,10 +250,10 @@ Keys are unique i.e. if inserting at a key which already exists then the value i
         <span class="kind">object</span>
       </span>
       <span class="symbol">
-        <a title="" href="BTree$.html"><span class="name">BTree</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
+        <a title="Companion object defining some static methods." href="BTree$.html"><span class="name">BTree</span></a><span class="result"> extends <span class="extype" name="scala.Serializable">Serializable</span></span>
       </span>
       
-      
+      <p class="shortcomment cmt">Companion object defining some static methods.</p>
     </li><li name="jps.Main" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
       <a id="Main"></a><a id="Main:Main"></a>
       <span class="permalink">

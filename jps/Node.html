@@ -86,21 +86,21 @@
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd><a href="../index.html" class="extype" name="_root_">root</a></dd></dl></div>
     </li><li class="current-entities indented1">
-                        <a class="object" href="BTree$.html" title=""></a>
-                        <a class="class" href="BTree.html" title=""></a>
-                        <a href="BTree.html" title="">BTree</a>
+                        <a class="object" href="BTree$.html" title="Companion object defining some static methods."></a>
+                        <a class="class" href="BTree.html" title="This class defines BTree and supplies methods to operate on it."></a>
+                        <a href="BTree.html" title="This class defines BTree and supplies methods to operate on it.">BTree</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
                         <a class="object" href="Main$.html" title=""></a>
                         <a href="Main$.html" title="">Main</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
-                        <a class="class" href="" title=""></a>
-                        <a href="" title="">Node</a>
+                        <a class="class" href="" title="This class defines a node of BTree."></a>
+                        <a href="" title="This class defines a node of BTree.">Node</a>
                       </li><li class="current-entities indented1">
                         <span class="separator"></span>
-                        <a class="class" href="NodeElement.html" title="This class defines an element which is going to be stored in BTree."></a>
-                        <a href="NodeElement.html" title="This class defines an element which is going to be stored in BTree.">NodeElement</a>
+                        <a class="class" href="NodeElement.html" title="This class defines an element which is going to be stored in a node of BTree."></a>
+                        <a href="NodeElement.html" title="This class defines an element which is going to be stored in a node of BTree.">NodeElement</a>
                       </li>
               </ul>
             </div>
@@ -129,7 +129,10 @@
       </h4>
 
       
-          <div id="comment" class="fullcommenttop"><div class="toggleContainer block">
+          <div id="comment" class="fullcommenttop"><div class="comment cmt"><p>This class defines a node of BTree.
+Node stores information in a vector about NodeElements it contains.
+Node stores information in a vector about its children.
+</p></div><dl class="paramcmts block"><dt class="tparam">K</dt><dd class="cmt"><p>type of key</p></dd><dt class="tparam">V</dt><dd class="cmt"><p>type of value</p></dd><dt class="param">nodeElements</dt><dd class="cmt"><p>Vector of NodeElements which are stored in this node</p></dd><dt class="param">nodeChildren</dt><dd class="cmt"><p>Vector of node's children</p></dd><dt class="param">ordering</dt><dd class="cmt"><p>given ordering for keys</p></dd></dl><div class="toggleContainer block">
           <span class="toggle">
             Linear Supertypes
           </span>
@@ -179,7 +182,7 @@
         <div id="allMembers">
         <div id="constructors" class="members">
               <h3>Instance Constructors</h3>
-              <ol><li name="jps.Node#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+              <ol><li name="jps.Node#&lt;init&gt;" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="&lt;init&gt;(nodeElements:Vector[jps.NodeElement[K,V]],nodeChildren:Vector[jps.Node[K,V]])(implicitordering:Ordering[K]):jps.Node[K,V]"></a><a id="&lt;init&gt;:Node[K,V]"></a>
       <span class="permalink">
       <a href="../jps/Node.html#&lt;init&gt;(nodeElements:Vector[jps.NodeElement[K,V]],nodeChildren:Vector[jps.Node[K,V]])(implicitordering:Ordering[K]):jps.Node[K,V]" title="Permalink">
@@ -194,7 +197,7 @@
         <span class="name">Node</span><span class="params">(<span name="nodeElements">nodeElements: <span class="extype" name="scala.Vector">Vector</span>[<a href="NodeElement.html" class="extype" name="jps.NodeElement">NodeElement</a>[<span class="extype" name="jps.Node.K">K</span>, <span class="extype" name="jps.Node.V">V</span>]]</span>, <span name="nodeChildren">nodeChildren: <span class="extype" name="scala.Vector">Vector</span>[<a href="" class="extype" name="jps.Node">Node</a>[<span class="extype" name="jps.Node.K">K</span>, <span class="extype" name="jps.Node.V">V</span>]]</span>)</span><span class="params">(<span class="implicit">implicit </span><span name="ordering">ordering: <span class="extype" name="scala.Ordering">Ordering</span>[<span class="extype" name="jps.Node.K">K</span>]</span>)</span>
       </span>
       
-      
+      <p class="shortcomment cmt"></p><div class="fullcomment"><div class="comment cmt"></div><dl class="paramcmts block"><dt class="param">nodeElements</dt><dd class="cmt"><p>Vector of NodeElements which are stored in this node</p></dd><dt class="param">nodeChildren</dt><dd class="cmt"><p>Vector of node's children</p></dd><dt class="param">ordering</dt><dd class="cmt"><p>given ordering for keys</p></dd></dl></div>
     </li></ol>
             </div>
 
@@ -366,7 +369,7 @@
       </span>
       
       <div class="fullcomment"><dl class="attributes block"> <dt>Definition Classes</dt><dd>Any</dd></dl></div>
-    </li><li name="jps.Node#isLeaf" visbl="pub" class="indented0 " data-isabs="false" fullComment="no" group="Ungrouped">
+    </li><li name="jps.Node#isLeaf" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="isLeaf:Boolean"></a>
       <span class="permalink">
       <a href="../jps/Node.html#isLeaf:Boolean" title="Permalink">
@@ -381,7 +384,8 @@
         <span class="name">isLeaf</span><span class="result">: <span class="extype" name="scala.Boolean">Boolean</span></span>
       </span>
       
-      
+      <p class="shortcomment cmt">Checks if this node is a leaf.</p><div class="fullcomment"><div class="comment cmt"><p>Checks if this node is a leaf.
+</p></div><dl class="paramcmts block"><dt>returns</dt><dd class="cmt"><p>true if this node is a leaf, else false</p></dd></dl></div>
     </li><li name="scala.AnyRef#ne" visbl="pub" class="indented0 " data-isabs="false" fullComment="yes" group="Ungrouped">
       <a id="ne(x$1:AnyRef):Boolean"></a><a id="ne(AnyRef):Boolean"></a>
       <span class="permalink">
