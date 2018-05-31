@@ -98,4 +98,89 @@ class BTreeTest extends FunSuite with BeforeAndAfter {
     assert(newBTree.search(6).get == 2)
   }
 
+
+  test("GIVEN empty btree with degree 3 WHEN insert one delete one") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(13, 5).delete(13)
+
+    assert(newBTree.rootNode.nodeElements.isEmpty)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert 2 delete one") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(13, 5).insert(14, 6).delete(14)
+
+    assert(newBTree.search(14).isEmpty)
+  }
+
+  test("GIVEN empty btree with degree 3 WHEN insert 6 delete one") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(1,1).
+      insert(2,1).
+      insert(3,1).
+      insert(4,1).
+      insert(5,1).
+      insert(6,1).
+      delete(6)
+
+    assert(newBTree.search(6).isEmpty)
+  }
+  test("GIVEN empty btree with degree 3 WHEN insert 8 delete ") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(1,1).
+      insert(2,1).
+      insert(3,1).
+      insert(4,1).
+      insert(5,1).
+      insert(6,1).
+      insert(7,1).
+      insert(8,1).
+      delete(4)
+
+    assert(newBTree.search(4).isEmpty)
+  }
+  test("GIVEN empty btree with degree 3 WHEN insert 8 delete from child") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(1,1).
+      insert(2,1).
+      insert(3,1).
+      insert(4,1).
+      insert(5,1).
+      insert(6,1).
+      insert(7,1).
+      insert(8,1).
+      delete(7)
+
+    assert(newBTree.search(7).isEmpty)
+  }
+  test("GIVEN empty btree with degree 3 WHEN insert 3 delete one and found other element") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(1,1).
+      insert(2,1).
+      insert(3,1).
+      delete(3)
+
+    assert(newBTree.search(2).get == 1)
+  }
+  test("GIVEN value from btree with degree 3 WHEN insert 8 delete other child (check if delete dont delete other values)") {
+    val bTree = BTree.getEmptyBTree[Int, Int](3)
+
+    val newBTree = bTree.insert(1,1).
+      insert(2,1).
+      insert(3,1).
+      insert(4,1).
+      insert(5,1).
+      insert(6,1).
+      insert(7,1).
+      insert(8,1).
+      delete(8)
+
+    assert(newBTree.search(5).get == 1)
+  }
 }
