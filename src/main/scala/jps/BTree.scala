@@ -140,8 +140,7 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
     def deleteWithNode(node: Node[K, V]): Either[(NodeElement[K, V], Node[K, V], Node[K, V]), Node[K, V]] = {
 
       val foundElementIndex = node.nodeElements.indexWhere(_.key == key) //foundElement is of type Option[NodeElement[K, V]] because function find returns Option
-
-      if (foundElementIndex > 0) {
+      if (foundElementIndex >= 0) {
         if (node.isLeaf) {
           removeFromLeaf(node, foundElementIndex)
         }
