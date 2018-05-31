@@ -1,6 +1,24 @@
 package jps
 
-case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: Ordering[K]) {
+/**
+  * This class defines BTree and supplies methods to operate on it.
+  * BTree is specified by its root node and its degree.
+  * All leaves are at same level.
+  * A B-Tree is defined by the term minimum degree ‘degree’. The value of degree depends upon disk block size.
+  * Every node except root must contain at least degree - 1 keys. Root may contain minimum 1 key.
+  * All nodes (including root) may contain at most 2 * degree – 1 keys.
+  * Number of children of a node is equal to the number of keys in it plus 1.
+  * All keys of a node are sorted in increasing order. The child between two keys k1 and k2 contains all keys in the range from k1 and k2.
+  * B-Tree grows and shrinks from the root which is unlike Binary Search Tree. Binary Search Trees grow downward and also shrink from downward.
+  * Like other balanced Binary Search Trees, time complexity to search, insert and delete is O(Logn).
+  *
+  * @param rootNode root node of this BTree
+  * @param degree minimum degree of this BTree
+  * @param keyOrdering given ordering for keys
+  * @tparam K type of key
+  * @tparam V type of value
+  */
+case class BTree[K, V](rootNode: Node[K, V], degree: Int)(implicit keyOrdering: Ordering[K]) {
 
   /* This implicit method augments T with the comparison operators defined in scala.math.Ordering.Ops */
 
@@ -31,9 +49,9 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
 
     def splitNode(node: Node[K, V]): (NodeElement[K, V], Node[K, V], Node[K, V]) = {
 
-      val returnNodeElement = node.nodeElements(order - 1)
-      val returnLeftNode = Node(node.nodeElements.take(order - 1), node.nodeChildren.take(order)) //take - selects first n elements
-      val returnRightNode = Node(node.nodeElements.takeRight(order - 1), node.nodeChildren.takeRight(order)) //takeRight - selects last n elements
+      val returnNodeElement = node.nodeElements(degree - 1)
+      val returnLeftNode = Node(node.nodeElements.take(degree - 1), node.nodeChildren.take(degree)) //take - selects first n elements
+      val returnRightNode = Node(node.nodeElements.takeRight(degree - 1), node.nodeChildren.takeRight(degree)) //takeRight - selects last n elements
 
       (returnNodeElement, returnLeftNode, returnRightNode)
     }
@@ -68,7 +86,7 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
               node.copy(nodeChildren = node.nodeChildren.updated(index, modifiedChild))
           }
         }
-        if (nodeCopy.nodeElements.length == 2 * order - 1)
+        if (nodeCopy.nodeElements.length == 2 * degree - 1)
           Left(splitNode(nodeCopy))
         else
           Right(nodeCopy)
@@ -109,7 +127,7 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
 
     def removeFromNonLeaf(node: Node[K, V], index: Int): Node[K, V] = {
       //if child precedes index have at least order keys, replace and remove
-      if (node.nodeChildren(index).nodeElements.length >= order) {
+      if (node.nodeChildren(index).nodeElements.length >= degree) {
         val lastElementInPreviousChildren = node.nodeChildren(index).nodeElements.last
         val newCurrentNode = node.nodeElements.updated(index, lastElementInPreviousChildren) //switch last element with current
         node.copy(
@@ -117,7 +135,7 @@ case class BTree[K, V](rootNode: Node[K, V], order: Int)(implicit keyOrdering: O
           nodeChildren = removeLastElementFromVec(node.nodeChildren)
         )
       } //child node, before element have less than order keys, so examine next node, and do the same with first element
-      else if (node.nodeChildren(index + 1).nodeElements.length >= order) {
+      else if (node.nodeChildren(index + 1).nodeElements.length >= degree) {
         val firstElemenentInNextChildren = node.nodeChildren(index + 1).nodeElements.head
         val newCurrentNode = node.nodeElements.updated(index, firstElemenentInNextChildren) //switch first child element with current
         node.copy(
